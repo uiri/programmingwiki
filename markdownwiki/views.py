@@ -23,6 +23,6 @@ def edit(request):
     if request.method == "GET":
         pagetitle = request.path[1:]
         pagetitle = pagetitle.rsplit('/')[0]
-        return render_to_response('edit.html' {'title': 'Editting '+pagetitle})
+        return render_to_response('edit.html', {'title': 'Editting '+pagetitle})
     else:
-        return render_to_response('base.html' {'title': 'XQZ Programming Wiki'})
+        return render_to_response('base.html', {'title': 'XQZ Programming Wiki'})
