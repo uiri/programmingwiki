@@ -1,6 +1,6 @@
 # Create your views here.
 import markdown2
-from models import *
+from models import Page
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.db.models import Max
@@ -21,4 +21,4 @@ def home(request):
 
 def edit(request):
     # edit stuff
-
+    pass

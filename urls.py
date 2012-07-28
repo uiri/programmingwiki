@@ -1,12 +1,12 @@
 from django.conf.urls import patterns, include, url
-
+from markdownwiki import views as wikiviews
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-                       (r'^[^/]+$', markdownwiki.views.showpage)
-                       (r'^$', markdownwiki.views.home)
+                       (r'^[^/]+$', wikiviews.showpage)
+                       (r'^$', wikiviews.home)
     # Examples:
     # url(r'^$', 'programmingwiki.views.home', name='home'),
     # url(r'^foo/', include('foo.urls')),
