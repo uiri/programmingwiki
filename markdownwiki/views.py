@@ -14,11 +14,15 @@ def showpage(request):
         return render_to_response('create.html', {'title' : request.path[1:]})
     if data.redirect:
         return redirect(data.content)
-    return render_to_response('page.html', {'content' : markdown2.markdown(data.content)})
+    return render_to_response('page.html', {'content' : markdown2.markdown(data.content), 'title' : request.path[1:]})
 
 def home(request):
-    return render_to_response('index.html')
+    return render_to_response('base.html', {'title': 'XQZ Programming Wiki'})
 
 def edit(request):
-    # edit stuff
-    pass
+    if request.method == "GET":
+        pagetitle = request.path[1:]
+        pagetitle = pagetitle.rsplit('/')[0]
+        return render_to_response('edit.html' {'title': 'Editting '+pagetitle})
+    else:
+        return render_to_response('base.html' {'title': 'XQZ Programming Wiki'})
