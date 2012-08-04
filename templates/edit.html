@@ -13,6 +13,8 @@
 	  div.innerHTML = textareastuff;
   }
 </script>
+<form method="POST">
+{% csrf_token %}
 <div>
   <label for="id_redirect">Redirect?:</label>
   {{ form.redirect }}
@@ -21,4 +23,6 @@
   <label for="id_pagecontent">Page Text:</label>
   {{ form.pagecontent }}
 </div>
+<input type="submit" value="Save Changes">
+</form>
 {% endblock %}

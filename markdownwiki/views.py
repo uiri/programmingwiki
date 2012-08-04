@@ -3,7 +3,9 @@ import markdown2
 from forms import PageForm
 from models import Page
 from django.http import HttpResponseRedirect, Http404
+from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_protect
 
 def showpage(request):
     try:
@@ -19,7 +21,9 @@ def showpage(request):
 def home(request):
     return render_to_response('base.html', {'title': 'XQZ Programming Wiki'})
 
+@csrf_protect
 def edit(request):
+    c = {}
     pagetitle = request.path[1:]
     pagetitle = pagetitle.rsplit('/')[0]
     if request.method == "POST":
@@ -41,4 +45,5 @@ def edit(request):
             newrev = Page(newrevdata)
             newrev.save()
             return render_to_response('base.html', {'title': 'XQZ Programming Wiki'})
-    return render_to_response('edit.html', {'title': 'Editting '+pagetitle, 'form' : PageForm()})
+    c.update({'title' : "Editting "+pagetitle, 'form' : PageForm()})
+    return render_to_response('edit.html',  c, context_instance=RequestContext(request))
