@@ -32,17 +32,15 @@ def edit(request):
             if form.cleaned_data['redirect']:
                 if not Page.objects.filter(title=form.cleaned_data['pagecontent']).exists():
                     return render_to_response('edit.html', {'title' : 'Editting '+pagetitle, 'form' : PageForm()})
-            newrevdata = {}
-            newrevdata['title'] = pagetitle
+            newrev = Page(title=pagetitle)
             newestrev = Page.objects.filter(title=pagetitle).count()
-            newrevdata['redirect'] = form.cleaned_data['redirect']
-            newrevdata['contents'] = form.cleaned_data['pagecontent']
+            newrev.redirect = form.cleaned_data['redirect']
+            newrev.contents = form.cleaned_data['pagecontent']
             if newestrev:
-                newrevdata['talkcontents'] = Page.objects.filter(title=pagetitle, revision=newestrev).talkcontents
+                newrev.talkcontents = Page.objects.filter(title=pagetitle, revision=newestrev).talkcontents
             else:
-                newrevdata['talkcontents'] = ""
-            newrevdata['revision'] = newestrev + 1
-            newrev = Page(newrevdata)
+                newrev.talkcontents = ""
+            newrev.revision = newestrev + 1
             newrev.save()
             return render_to_response('base.html', {'title': 'XQZ Programming Wiki'})
     c.update({'title' : "Editting "+pagetitle, 'form' : PageForm()})
