@@ -36,7 +36,7 @@ def edit(request):
             newrevdata['title'] = pagetitle
             newestrev = Page.objects.filter(title=pagetitle).count()
             newrevdata['redirect'] = form.cleaned_data['redirect']
-            newrevdata['content'] = form.cleaned_data['pagecontent']
+            newrevdata['contents'] = form.cleaned_data['pagecontent']
             if newestrev:
                 newrevdata['talkcontents'] = Page.objects.filter(title=pagetitle, revision=newestrev).talkcontents
             else:
