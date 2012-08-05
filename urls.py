@@ -5,8 +5,10 @@ from markdownwiki import views as wikiviews
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-                       (r'^[^/]+/edit$', wikiviews.edit),
-                       (r'^[^/]+$', wikiviews.showpage),
+                       (r'^[^/]+/talk/edit$', wikiviews.edit, {'talk': True}),
+                       (r'^[^/]+/talk$', wikiviews.show, {'talk': True}),
+                       (r'^[^/]+/edit$', wikiviews.edit, {'talk': False}),
+                       (r'^[^/]+$', wikiviews.show, {'talk': False}),
                        (r'^$', wikiviews.home)
     # Examples:
     # url(r'^$', 'programmingwiki.views.home', name='home'),

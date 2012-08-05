@@ -2,7 +2,7 @@
 
 {% block pagecontent %}
 <script>
-  var textareastuff = "<label for='id_pagecontent'>Page Text:</label> <textarea id='id_pagecontent' name='pagecontent' rows='10' cols='40'></textarea>";
+  var textareastuff = "<label for='id_pagecontent'>Page Text:</label> <textarea id='id_pagecontent' name='pagecontent' rows='10' cols='40'>{{oldcontents}}</textarea>";
   var inputstuff = "<label for='id_pagecontent'>Page Title to Redirect To:</label><input type='text' id='id_pagecontent' name='pagecontent'>";
   function changePagecontentWidget() {
       var box = document.getElementById("id_redirect");
