@@ -5,6 +5,7 @@ from markdownwiki import views as wikiviews
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+                       (r'^[^/]+/search', wikiviews.search),
                        (r'^[^/]+/talk/edit$', wikiviews.edit, {'talk': True}),
                        (r'^[^/]+/talk$', wikiviews.show, {'talk': True}),
                        (r'^[^/]+/edit$', wikiviews.edit, {'talk': False}),

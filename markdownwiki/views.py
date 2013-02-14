@@ -8,9 +8,10 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_protect
 
 def show(request, talk):
-    data = getlatestdata(request.path[1:])
+    pagetitle = request.path[1:].rsplit('/')[0]
+    data = getlatestdata(pagetitle)
     if not data:
-        return render_to_response('create.html', {'title' : request.path[1:]})
+        return render_to_response('create.html', {'title' : pagetitle})
     if data.redirect:
         return redirect(data.contents)
     return render_to_response('page.html', {'content' : markdown2.markdown(data.contents), 'title' : request.path[1:]})
@@ -27,6 +28,20 @@ def getlatestdata(title):
     
 def home(request):
     return render_to_response('base.html', {'title': 'XQZ Programming Wiki'})
+
+def search(request):
+    q = request.path[1:].rsplit('/')[0]
+    qset = Page.objects.extra(
+        select={
+            'snippet': "ts_headline(contents, to_tsquery(%s))",
+            'rank': "ts_rank_cd(to_tsvector(contents, to_tsquery(%s))"
+            },
+        where=["to_tsvector(contents) @@ to_tsquery(%s)"],
+        params=[q],
+        select_params=[q, q],
+        order_by=('-rank',)
+        )
+    return render_to_response('results.html')
 
 @csrf_protect
 def edit(request, talk):
