@@ -3,5 +3,10 @@
 {% block pagecontent %}
 Still testing…
 
-{{results}}
+{% for result in results %}
+<a href="/{{result.title}}">{{result.title}}</a>
+{% autoescape off %}
+{{result.snippet}}
+{% endautoescape %}
+{% endfor %}
 {% endblock %}
