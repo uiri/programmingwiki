@@ -41,7 +41,10 @@ def search(request):
         select_params=[q, q],
         order_by=('-id',)
         )
-    return render_to_response('results.html', {'results': list(qset)})
+    resultlist = list(qset)
+    for result in resultlist:
+        result.snippet = markdown2.markdown(result.snippet)
+    return render_to_response('results.html', {'results': resultlist})
 
 @csrf_protect
 def edit(request, talk):
