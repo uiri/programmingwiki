@@ -34,14 +34,14 @@ def search(request):
     qset = Page.objects.extra(
         select={
             'snippet': "ts_headline(contents, to_tsquery(%s))",
-            'rank': "ts_rank_cd(to_tsvector(contents, to_tsquery(%s))"
+            #'rank': "ts_rank_cd(to_tsvector(contents, to_tsquery(%s))"
             },
         where=["to_tsvector(contents) @@ to_tsquery(%s)"],
         params=[q],
         select_params=[q, q],
-        order_by=('-rank',)
+        order_by=('-id',)
         )
-    return render_to_response('results.html')
+    return render_to_response('results.html', {'results': list(qset)})
 
 @csrf_protect
 def edit(request, talk):
